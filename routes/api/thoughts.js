@@ -13,12 +13,7 @@ router.route('/').get(getAllThoughts);
 
 router.route('/:userId').post(createThought);
 
-router
-  .route('/:userId/:thoughtId')
-  .get(getThoughtById)
-  .put(updateThought)
-  .post(addReaction)
-  .delete(deleteThought);
+router.route('/:userId/:thoughtId').get(getThoughtById).put(updateThought).post(addReaction).delete(deleteThought);
 
 router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
 

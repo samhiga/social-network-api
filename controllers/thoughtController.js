@@ -16,13 +16,12 @@ const thoughtController = {
         });
     },
     
-    getThoughtById(req, res) {
-        const { id } = req.params;
-        Thought.findOne({ _id: id })
-        .populate({
-            path: "reactions",
-            select: "-__v",
-        })
+    getThoughtById({ params }, res) {
+        Thought.findById({ _id: params.thoughtId })
+          .populate({
+            path: 'reactions',
+            select: '-__v',
+          })
         .select("-__v")
         .then((dbThoughtData) => {
             if (!dbThoughtData) {
@@ -58,9 +57,8 @@ const thoughtController = {
         });
     },
   
-    updateThought(req, res) {
-      const { id } = req.params;
-      Thought.findOneAndUpdate({ _id: id }, req.body, {
+    updateThought({ params, body }, res) {
+        Thought.findOneAndUpdate({ _id: params.thoughtId }, body, {
         new: true,
         runValidators: true,
       })
@@ -75,7 +73,7 @@ const thoughtController = {
           res.status(500).json({ error: "An error occurred" });
         });
     },
-  
+// potential bug?
     deleteThought(req, res) {
       const { id } = req.params;
       Thought.findOneAndDelete({ _id: id })
